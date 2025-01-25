@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LoginBg from "../assets/login-bg.jpg"
 import WhatsAppIcon from "../components/WhatsAppIcon"
 const Login = () => {
+
+  const [key, setkey] = useState("")
+
+
   return (
     <div style={{
       height: "100vh",
@@ -46,12 +50,12 @@ const Login = () => {
         </div>
 
         <div style={{padding: "32px"}}>
-          <input className='tInput' type="text" name="" id="" placeholder="Lisans Kodu" />
+          <input onChange={(e) => setkey(e.target.value)} className='tInput' type="text" name="" id="" placeholder="Lisans Kodu" />
         </div>
 
         <div style={{paddingLeft: "32px", paddingRight: "32px", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
           <div className="tLink">Lisans Kodun yok mu? <span style={{fontWeight: "500", color: "var(--text-color)", textDecoration: "underline", marginLeft: "4px"}}>Talep Et!</span></div>
-          <button style={{maxWidth: "96px"}} className='tButton'>Giriş Yap</button>
+          <button disabled={key.length > 0 ? false : true} style={{maxWidth: "96px"}} className='tButton'>Giriş Yap</button>
         </div>
 
 
