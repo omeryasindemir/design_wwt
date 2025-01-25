@@ -50,7 +50,7 @@ const Login = () => {
         </div>
 
         <div style={{paddingLeft: "32px", paddingRight: "32px", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-          <div className="tLink">Lisans Kodun yok mu? <span style={{fontWeight: "500", color: "var(--text-color)", textDecoration: "underline"}}>Talep Et!</span></div>
+          <div className="tLink">Lisans Kodun yok mu? <span style={{fontWeight: "500", color: "var(--text-color)", textDecoration: "underline", marginLeft: "4px"}}>Talep Et!</span></div>
           <button style={{maxWidth: "96px"}} className='tButton'>Giriş Yap</button>
         </div>
 
