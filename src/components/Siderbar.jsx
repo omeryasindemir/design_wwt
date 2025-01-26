@@ -9,6 +9,7 @@ const Siderbar = ({selectedItem}) => {
         <div style={{
             height: "100vh",
             width: "240px",
+            minWidth: "240px",
             backgroundColor: "var(--white-color)",
             borderRight: "1px solid var(--border-color)"
         }}>
