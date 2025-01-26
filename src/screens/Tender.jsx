@@ -1,12 +1,13 @@
 import React from 'react'
 import Siderbar from '../components/Siderbar'
-const Dashboard = () => {
+
+const Tender = () => {
   return (
     <div style={{display: "flex"}}>
-      <Siderbar selectedItem="dashboard" />
-      <div>Dashboard</div>
+        <Siderbar selectedItem="tender" />
+        <div>İhaleler</div>
     </div>
   )
 }
 
-export default Dashboard
+export default Tender

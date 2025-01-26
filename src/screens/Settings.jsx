@@ -1,12 +1,12 @@
 import React from 'react'
 import Siderbar from '../components/Siderbar'
-const Dashboard = () => {
+const Settings = () => {
   return (
     <div style={{display: "flex"}}>
-      <Siderbar selectedItem="dashboard" />
-      <div>Dashboard</div>
+        <Siderbar selectedItem="settings" />
+        <div>Ayarlar</div>
     </div>
   )
 }
 
-export default Dashboard
+export default Settings
