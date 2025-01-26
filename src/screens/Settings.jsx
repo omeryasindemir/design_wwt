@@ -11,7 +11,7 @@ const Settings = () => {
           borderBottom: "1px solid var(--border-color)",
           paddingBottom: "8px"
         }}>Ayarlar</div>
-        <div style={{ marginTop: "24px", border: "1px solid var(--border-color)", borderRadius: "12px", backgroundColor: "var(--white-color)", boxShadow: "0px 0px 2px 0px rgba(0, 0, 0, 0.1)", width: "100%", maxWidth: "480px" }}>
+        <div style={{ marginTop: "24px", border: "1px solid var(--border-color)", borderRadius: "12px", backgroundColor: "var(--white-color)", width: "100%", maxWidth: "480px" }}>
           <div style={{
             height: "48px",
             padding: "16px",
