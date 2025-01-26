@@ -1,10 +1,20 @@
 import React, { useState } from 'react'
 import LoginBg from "../assets/login-bg.jpg"
 import WhatsAppIcon from "../components/WhatsAppIcon"
+import { authLogin } from "../server/request"
+import { lsToken } from "../data/lsToken"
+
 const Login = () => {
 
   const [key, setkey] = useState("")
 
+  const handleLogin = async () => {
+    const response = await authLogin({
+      key: key
+    })
+    localStorage.setItem(lsToken, response.csrfToken)
+    console.log(response)
+  }
 
   return (
     <div style={{
@@ -55,7 +65,7 @@ const Login = () => {
 
         <div style={{paddingLeft: "32px", paddingRight: "32px", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
           <div className="tLink">Lisans Kodun yok mu? <span style={{fontWeight: "500", color: "var(--text-color)", textDecoration: "underline", marginLeft: "4px"}}>Talep Et!</span></div>
-          <button disabled={key.length > 0 ? false : true} style={{maxWidth: "96px"}} className='tButton'>Giriş Yap</button>
+          <button onClick={handleLogin} disabled={key.length > 0 ? false : true} style={{maxWidth: "96px"}} className='tButton'>Giriş Yap</button>
         </div>
 
 
