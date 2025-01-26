@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import LoginBg from "../assets/login-bg.jpg"
 import WhatsAppIcon from "../components/WhatsAppIcon"
-import { authLogin } from "../server/request"
+import { authLogin, userBindKey } from "../server/request"
 import { lsToken } from "../data/lsToken"
 import { useNavigate } from 'react-router-dom'
 
@@ -11,18 +11,49 @@ const Login = () => {
 
   const [key, setkey] = useState("")
 
+  const [tcknState, settcknState] = useState(null)
+  const [passwordState, setpasswordState] = useState(null)
+
+  const [isSecondStep, setisSecondStep] = useState(false)
+
   const handleLogin = async () => {
-    try {
-      const response = await authLogin({
-        key: key
-      })
-      localStorage.setItem(lsToken, response.csrfToken)
-      navigate("/dashboard")
-      window.location.reload()
-      console.log(response)
-    } catch (error) {
-      console.log(error)
+
+    if (isSecondStep) {
+      try {
+        const response = await userBindKey({
+          tckn: tcknState,
+          password: passwordState
+        }, localStorage.getItem(lsToken))
+        console.log(response)
+        navigate("/dashboard")
+        window.location.reload()
+      } catch (error) {
+        console.log(error)
+      }
+    }else{
+      try {
+        const response = await authLogin({
+          key: key
+        }, setisSecondStep)
+        console.log(response) 
+
+        if (response.status === 301) {
+          const token = await response.json()
+          localStorage.setItem(lsToken, token.csrfToken)
+          setisSecondStep(true)
+        }else{
+          localStorage.setItem(lsToken, response.csrfToken)
+          navigate("/dashboard")
+          window.location.reload()
+        }
+
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
     }
+    
+
   }
 
   return (
@@ -69,7 +100,9 @@ const Login = () => {
         </div>
 
         <div style={{padding: "32px"}}>
-          <input onChange={(e) => setkey(e.target.value)} className='tInput' type="text" name="" id="" placeholder="Lisans Kodu" />
+          {!isSecondStep && <input onChange={(e) => setkey(e.target.value)} className='tInput' type="text" name="" id="" placeholder="Lisans Kodu" />}
+          {isSecondStep && <input onChange={(e) => settcknState(e.target.value)} className='tInput' type="text" name="" id="" placeholder="T.C. Kimlik No" />}
+          {isSecondStep && <input style={{marginTop: "16px"}} onChange={(e) => setpasswordState(e.target.value)} className='tInput' type="text" name="" id="" placeholder="Parola" />}
         </div>
 
         <div style={{paddingLeft: "32px", paddingRight: "32px", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
