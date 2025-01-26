@@ -1,6 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Siderbar from '../components/Siderbar'
-const Settings = ({isAdmin}) => {
+import { lsToken } from '../data/lsToken'
+import { userCredSave } from '../server/request'
+const Settings = ({userData, isAdmin}) => {
+
+  const [tckn, settckn] = useState(userData?.tckn)
+  const [password, setpassword] = useState(userData?.password)
+
+
+  const handleSave = async () => {
+    try {
+      const res = await userCredSave({
+        tckn: tckn,
+        password: password
+      }, localStorage.getItem(lsToken))
+      window.location.reload()
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div style={{ display: "flex" }}>
       <Siderbar isAdmin={isAdmin} selectedItem="settings" />
@@ -23,14 +43,14 @@ const Settings = ({isAdmin}) => {
           }}>İhale Sistemi Ayarları</div>
           <div style={{padding: "16px"}}>
             <div>
-              <input className='tInput' type="text" name="tckn" id="tckn" placeholder="T.C. Kimlik No" />
+              <input onChange={(e) => settckn(e.target.value)} value={tckn} className='tInput' type="number" name="tckn" id="tckn" placeholder="T.C. Kimlik No" />
             </div>
             <div style={{marginTop: "16px"}}>
-              <input className='tInput' type="text" name="password" id="password" placeholder="Parola" />
+              <input onChange={(e) => setpassword(e.target.value)} value={password} className='tInput' type="text" name="password" id="password" placeholder="Parola" />
             </div>
           </div>
           <div style={{padding: "16px"}}>
-            <button className='tButton'>Kaydet</button>
+            <button onClick={handleSave} className='tButton'>Kaydet</button>
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ const App = () => {
       <Route path="/" element={isAuth ? <Dashboard /> : <Login />} />
       {!isAuth && <Route path="/login" element={<Login />} />}
       {isAuth && <Route path="/dashboard" element={<Dashboard isAdmin={userData?.isAdmin} />} />}
-      {isAuth && <Route path="/settings" element={<Settings isAdmin={userData?.isAdmin} />} />}
+      {isAuth && <Route path="/settings" element={<Settings userData={userData} isAdmin={userData?.isAdmin} />} />}
       {isAuth && <Route path="/tender" element={<Tender isAdmin={userData?.isAdmin} />} />}
       {isAuth && userData?.isAdmin && <Route path="/admin/key" element={<NewKey isAdmin={userData?.isAdmin} />} />}
 
