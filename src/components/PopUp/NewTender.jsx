@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { userNewTender } from '../../server/request'
+import { lsToken } from '../../data/lsToken'
 
 const NewTender = ({setShowNewTender}) => {
+
+    const [tenderUrl, setTenderUrl] = useState("")
+    const [maxBalance, setMaxBalance] = useState(0)
+
+    const handleNewTender = async () => {
+        try {
+            const res = await userNewTender({url: tenderUrl, maxBid: maxBalance}, localStorage.getItem(lsToken))
+            console.log(res)
+            setShowNewTender(false)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", position: "fixed", top: "0", left: "0", width: "100%", backgroundColor: "rgba(0, 0, 0, 0.5)"}}>
             <div style={{ border: "1px solid var(--border-color)", borderRadius: "12px", backgroundColor: "var(--white-color)", width: "100%", maxWidth: "480px" }}>
@@ -22,14 +38,14 @@ const NewTender = ({setShowNewTender}) => {
                 </div>
                 <div style={{ padding: "16px" }}>
                     <div>
-                        <input className='tInput' type="text" name="tender_url" id="tender_url" placeholder="İhale Linki" />
+                        <input onChange={(e) => setTenderUrl(e.target.value)} className='tInput' type="text" name="tender_url" id="tender_url" placeholder="İhale Linki" />
                     </div>
                     <div style={{ marginTop: "16px" }}>
-                        <input className='tInput' type="number" name="max_balance" id="max_balance" placeholder="Maksimum Bakiye" />
+                        <input onChange={(e) => setMaxBalance(e.target.value)} className='tInput' type="number" name="max_balance" id="max_balance" placeholder="Maksimum Bakiye" />
                     </div>
                 </div>
                 <div style={{ padding: "16px" }}>
-                    <button className='tButton' onClick={() => setShowNewTender(false)}>Başlat</button>
+                    <button className='tButton' onClick={handleNewTender}>Başlat</button>
                 </div>
             </div>
         </div>
