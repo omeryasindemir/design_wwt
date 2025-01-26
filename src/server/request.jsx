@@ -59,3 +59,25 @@ export const authLogin = async (data) => {
         throw error;
     }
 };
+
+
+export const authMe = async (data) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/auth/me`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "csrf-token": data
+            },
+            credentials: "include"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("POST request error:", error);
+        throw error;
+    }
+};

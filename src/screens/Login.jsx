@@ -3,17 +3,26 @@ import LoginBg from "../assets/login-bg.jpg"
 import WhatsAppIcon from "../components/WhatsAppIcon"
 import { authLogin } from "../server/request"
 import { lsToken } from "../data/lsToken"
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+
+  const navigate = useNavigate()
 
   const [key, setkey] = useState("")
 
   const handleLogin = async () => {
-    const response = await authLogin({
-      key: key
-    })
-    localStorage.setItem(lsToken, response.csrfToken)
-    console.log(response)
+    try {
+      const response = await authLogin({
+        key: key
+      })
+      localStorage.setItem(lsToken, response.csrfToken)
+      navigate("/dashboard")
+      window.location.reload()
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
