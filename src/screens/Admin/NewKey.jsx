@@ -1,58 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Siderbar from "../../components/Siderbar";
 import NewTender from "../../components/PopUp/NewTender";
-import { adminCreateKey } from "../../server/request";
+import { adminActiveKeys, adminCreateKey } from "../../server/request";
 import { lsToken } from "../../data/lsToken";
 import NewKeySet from "../../components/PopUp/NewKeySet";
 
-const NewKey = ({isAdmin}) => {
+const NewKey = ({ isAdmin }) => {
 
   const [showNewTender, setShowNewTender] = useState(false);
   const [newKeyState, setnewKeyState] = useState(null)
 
-  const columns = [
+  const [columns, setColumns] = useState([
     {
-      title: "First Data",
+      title: "T.C. Kimlik No",
       dataIndex: "data1",
       key: "data1",
     },
     {
-      title: "Second Data",
+      title: "Parola",
       dataIndex: "data2",
       key: "data2",
     },
     {
-      title: "Third Data",
+      title: "Kredi",
       dataIndex: "data3",
       key: "data3",
-    },
-    {
-      title: "Fourth Data",
-      dataIndex: "data4",
-      key: "data4",
-    },
-  ];
+    }
+  ]);
 
-  const data = [
-    {
-      key: "1",
-      data1: "Row 1 Data 1",
-      data2: "Row 1 Data 2",
-      data3: "Row 1 Data 3",
-      data4: "Row 1 Data 4",
-    },
-    {
-      key: "2",
-      data1: "Row 2 Data 1",
-      data2: "Row 2 Data 2",
-      data3: "Row 2 Data 3",
-      data4: "Row 2 Data 4",
-    },
-  ];
+  const [data, setData] = useState([]);
 
   const handleNewKey = async () => {
     try {
       const newKeyRes = await adminCreateKey(localStorage.getItem(lsToken))
+
+      const res = await adminActiveKeys(localStorage.getItem(lsToken))
+      console.log(res)
+
+      const formattedData = res.map((item, index) => ({
+        key: index.toString(),
+        data1: item.tckn,
+        data2: item.password,
+        data3: item.credit
+      }));
+
+      setData(formattedData);
+
       setnewKeyState(newKeyRes.key)
       setShowNewTender(true)
       console.log(newKeyRes)
@@ -60,6 +53,29 @@ const NewKey = ({isAdmin}) => {
       console.log(error)
     }
   }
+
+
+  useEffect(() => {
+    const fetchActiveKeys = async () => {
+      try {
+        const res = await adminActiveKeys(localStorage.getItem(lsToken))
+        console.log(res)
+
+        const formattedData = res.map((item, index) => ({
+          key: index.toString(),
+          data1: item.tckn,
+          data2: item.password,
+          data3: item.credit
+        }));
+
+        setData(formattedData);
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchActiveKeys()
+  }, [])
 
   return (
     <div style={{ display: "flex" }}>
@@ -130,7 +146,7 @@ const NewKey = ({isAdmin}) => {
               </div>
             ))}
           </div>
-          <div style={{ marginTop: "16px", backgroundColor: "var(--white-color)", borderRadius: "8px", border: "1px solid var(--border-color)" }}>
+          <div style={{ marginTop: "16px", backgroundColor: "var(--white-color)", borderRadius: "8px", border: "1px solid var(--border-color)", maxHeight: "calc(100vh - 192px)", overflowY: "auto" }}>
             {data.map((row, index) => (
               <div
                 key={row.key}

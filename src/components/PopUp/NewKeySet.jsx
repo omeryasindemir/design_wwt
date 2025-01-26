@@ -16,6 +16,7 @@ const NewKeySet = ({setShowNewTender, newKeyState}) => {
             }, localStorage.getItem(lsToken))
             console.log(res)
             setShowNewTender(false)
+            window.location.reload()
         } catch (error) {
             console.log(error)
         }

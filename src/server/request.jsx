@@ -94,8 +94,6 @@ export const authMe = async (data) => {
 // -----------------------------------------------------------
 
 
-
-
 export const adminCreateKey = async (data) => {
     try {
         const response = await fetch(`${API_BASE_URL}/admin/createKey`, {
@@ -118,7 +116,6 @@ export const adminCreateKey = async (data) => {
 };
 
 
-
 export const adminManageKey = async (data, token) => {
     try {
         const response = await fetch(`${API_BASE_URL}/admin/manageKey`, {
@@ -128,6 +125,28 @@ export const adminManageKey = async (data, token) => {
                 "csrf-token": token
             },
             body: JSON.stringify(data),
+            credentials: "include"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("POST request error:", error);
+        throw error;
+    }
+};
+
+
+export const adminActiveKeys = async (data) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/admin/getKey/all`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "csrf-token": data
+            },
             credentials: "include"
         });
 
