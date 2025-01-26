@@ -6,15 +6,17 @@ import Settings from './screens/Settings'
 import Tender from './screens/Tender'
 import { authMe } from './server/request'
 import { lsToken } from './data/lsToken'
-
+import NewKey from './screens/Admin/NewKey'
 const App = () => {
 
   const [isAuth, setisAuth] = useState(false)
+  const [userData, setuserData] = useState(null)
 
   useEffect(() => {
     const fetchMe = async () => {
       try {
         const me = await authMe(localStorage.getItem(lsToken))
+        setuserData(me)
         setisAuth(true)
         console.log(me)
       } catch (error) {
@@ -29,9 +31,10 @@ const App = () => {
     <Routes>
       <Route path="/" element={isAuth ? <Dashboard /> : <Login />} />
       {!isAuth && <Route path="/login" element={<Login />} />}
-      {isAuth && <Route path="/dashboard" element={<Dashboard />} />}
-      {isAuth && <Route path="/settings" element={<Settings />} />}
-      {isAuth && <Route path="/tender" element={<Tender />} />}
+      {isAuth && <Route path="/dashboard" element={<Dashboard isAdmin={userData?.isAdmin} />} />}
+      {isAuth && <Route path="/settings" element={<Settings isAdmin={userData?.isAdmin} />} />}
+      {isAuth && <Route path="/tender" element={<Tender isAdmin={userData?.isAdmin} />} />}
+      {isAuth && userData?.isAdmin && <Route path="/admin/key" element={<NewKey isAdmin={userData?.isAdmin} />} />}
 
       <Route path="*" element={<div style={{
         height: "100vh",

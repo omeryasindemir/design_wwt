@@ -1,9 +1,9 @@
 import React from 'react'
 import Siderbar from '../components/Siderbar'
-const Dashboard = () => {
+const Dashboard = ({isAdmin}) => {
   return (
     <div style={{display: "flex"}}>
-      <Siderbar selectedItem="dashboard" />
+      <Siderbar isAdmin={isAdmin} selectedItem="dashboard" />
       <div>Dashboard</div>
     </div>
   )

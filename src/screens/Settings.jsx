@@ -1,9 +1,9 @@
 import React from 'react'
 import Siderbar from '../components/Siderbar'
-const Settings = () => {
+const Settings = ({isAdmin}) => {
   return (
     <div style={{ display: "flex" }}>
-      <Siderbar selectedItem="settings" />
+      <Siderbar isAdmin={isAdmin} selectedItem="settings" />
       <div style={{ width: "100%", padding: "32px" }}>
         <div style={{
           fontSize: "20px",

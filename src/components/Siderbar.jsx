@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Siderbar = ({selectedItem}) => {
+const Siderbar = ({ selectedItem, isAdmin }) => {
 
     const navigate = useNavigate();
 
@@ -28,18 +28,23 @@ const Siderbar = ({selectedItem}) => {
             <div style={{ paddingLeft: "8px", paddingRight: "8px" }}>
                 <div onClick={() => navigate("/dashboard")} className={selectedItem === "dashboard" ? "sidebar_item_selected" : "sidebar_item click"}>
                     <div><i className="bi bi-clipboard-data"></i></div>
-                    <div style={{marginTop: "2px"}}>Kontrol Paneli</div>
+                    <div style={{ marginTop: "2px" }}>Kontrol Paneli</div>
                 </div>
 
-                <div style={{marginTop: "8px"}} onClick={() => navigate("/tender")} className={selectedItem === "tender" ? "sidebar_item_selected" : "sidebar_item click"}>
+                <div style={{ marginTop: "8px" }} onClick={() => navigate("/tender")} className={selectedItem === "tender" ? "sidebar_item_selected" : "sidebar_item click"}>
                     <div><i className="bi bi-bank"></i></div>
-                    <div style={{marginTop: "2px"}}>İhaleler</div>
+                    <div style={{ marginTop: "2px" }}>İhaleler</div>
                 </div>
 
-                <div style={{marginTop: "8px"}} onClick={() => navigate("/settings")} className={selectedItem === "settings" ? "sidebar_item_selected" : "sidebar_item click"}>
+                <div style={{ marginTop: "8px" }} onClick={() => navigate("/settings")} className={selectedItem === "settings" ? "sidebar_item_selected" : "sidebar_item click"}>
                     <div><i className="bi bi-gear"></i></div>
-                    <div style={{marginTop: "2px"}}>Ayarlar</div>
+                    <div style={{ marginTop: "2px" }}>Ayarlar</div>
                 </div>
+
+                {isAdmin && <div style={{ marginTop: "8px" }} onClick={() => navigate("/admin/key")} className={selectedItem === "op-key" ? "sidebar_item_selected" : "sidebar_item click"}>
+                    <div><i className="bi bi-key"></i></div>
+                    <div style={{ marginTop: "2px" }}>Admin (Key)</div>
+                </div>}
 
             </div>
 

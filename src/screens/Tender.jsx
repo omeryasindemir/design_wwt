@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Siderbar from "../components/Siderbar";
 import NewTender from "../components/PopUp/NewTender";
 
-const Tender = () => {
+const Tender = ({isAdmin}) => {
 
   const [showNewTender, setShowNewTender] = useState(false);
 
@@ -51,7 +51,7 @@ const Tender = () => {
 
       {showNewTender && <NewTender setShowNewTender={setShowNewTender} />}
 
-      <Siderbar selectedItem="tender" />
+      <Siderbar isAdmin={isAdmin} selectedItem="tender" />
       <div style={{ width: "100%", padding: "32px" }}>
         <div
           style={{
