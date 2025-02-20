@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { userNewTender } from '../../server/request'
 import { lsToken } from '../../data/lsToken'
 
-const NewTender = ({setShowNewTender}) => {
+const NewTender = ({setShowNewTender, fetchData}) => {
 
     const [tenderUrl, setTenderUrl] = useState("")
     const [maxBalance, setMaxBalance] = useState(0)
@@ -12,6 +12,7 @@ const NewTender = ({setShowNewTender}) => {
             const res = await userNewTender({url: tenderUrl, maxBid: maxBalance}, localStorage.getItem(lsToken))
             console.log(res)
             setShowNewTender(false)
+            fetchData()
         } catch (error) {
             console.log(error)
         }

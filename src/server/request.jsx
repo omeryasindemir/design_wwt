@@ -254,3 +254,25 @@ export const auctionTenderList = async (data) => {
         throw error;
     }
 };
+
+export const auctionMaxBidEdit = async (data, token, id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/auction/manage/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "csrf-token": token
+            },
+            body: JSON.stringify(data),
+            credentials: "include"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("POST request error:", error);
+        throw error;
+    }
+};
