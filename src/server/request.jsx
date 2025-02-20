@@ -231,3 +231,26 @@ export const userNewTender = async (data, token) => {
         throw error;
     }
 };
+
+// -----------------------------------------------------------
+
+export const auctionTenderList = async (data) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/auction/get/all`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "csrf-token": data
+            },
+            credentials: "include"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("POST request error:", error);
+        throw error;
+    }
+};

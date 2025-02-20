@@ -1,50 +1,92 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Siderbar from "../components/Siderbar";
 import NewTender from "../components/PopUp/NewTender";
-
+import { auctionTenderList } from "../server/request";
+import { lsToken } from "../data/lsToken";
 const Tender = ({isAdmin}) => {
 
   const [showNewTender, setShowNewTender] = useState(false);
 
+  const [uData, setuData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await auctionTenderList(localStorage.getItem(lsToken));
+      setuData(data);
+    };
+    fetchData();
+  }, []);
+
   const columns = [
     {
-      title: "First Data",
-      dataIndex: "data1",
-      key: "data1",
+      title: "Son Teklif",
+      dataIndex: "lastBid",
+      key: "lastBid",
     },
     {
-      title: "Second Data",
-      dataIndex: "data2",
-      key: "data2",
+      title: "Bitiş Tarihi",
+      dataIndex: "endTime",
+      key: "endTime",
     },
     {
-      title: "Third Data",
-      dataIndex: "data3",
-      key: "data3",
+      title: "Durum",
+      dataIndex: "isStopped",
+      key: "isStopped",
     },
     {
-      title: "Fourth Data",
-      dataIndex: "data4",
-      key: "data4",
+      title: "Maksimum Teklif",
+      dataIndex: "maxBid",
+      key: "maxBid",
     },
+    {
+      title: "URL",
+      dataIndex: "url",
+      key: "url",
+    },
+    {
+      title: "Kazanıldı mı?",
+      dataIndex: "isWon",
+      key: "isWon",
+    }
   ];
 
-  const data = [
-    {
-      key: "1",
-      data1: "Row 1 Data 1",
-      data2: "Row 1 Data 2",
-      data3: "Row 1 Data 3",
-      data4: "Row 1 Data 4",
-    },
-    {
-      key: "2",
-      data1: "Row 2 Data 1",
-      data2: "Row 2 Data 2",
-      data3: "Row 2 Data 3",
-      data4: "Row 2 Data 4",
-    },
-  ];
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString('tr-TR', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('tr-TR', {
+      style: 'currency',
+      currency: 'TRY'
+    }).format(price);
+  };
+
+  const StatusDot = ({ won }) => (
+    <div style={{
+      width: '12px',
+      height: '12px',
+      borderRadius: '50%',
+      backgroundColor: won ? '#4CAF50' : '#f44336',
+      margin: 'auto'
+    }} />
+  );
+
+  const tableData = uData.map((item, index) => ({
+    key: item._id,
+    lastBid: formatPrice(item.lastBid),
+    endTime: formatDate(item.endTime),
+    isStopped: item.isStopped ? "Durduruldu" : "Devam Ediyor",
+    maxBid: formatPrice(item.maxBid),
+    url: <a href={item.url} target="_blank" rel="noopener noreferrer" style={{color: 'blue', textDecoration: 'underline'}}>Görüntüle</a>,
+    isWon: item.isStopped ? <StatusDot won={item.lastBid === item.userOffer} /> : "-"
+  }));
 
   return (
     <div style={{ display: "flex" }}>
@@ -116,7 +158,7 @@ const Tender = ({isAdmin}) => {
             ))}
           </div>
           <div style={{ marginTop: "16px", backgroundColor: "var(--white-color)", borderRadius: "8px", border: "1px solid var(--border-color)" }}>
-            {data.map((row, index) => (
+            {tableData.map((row, index) => (
               <div
                 key={row.key}
                 style={{
@@ -126,7 +168,7 @@ const Tender = ({isAdmin}) => {
                   height: "40px",
                   paddingLeft: "16px",
                   paddingRight: "16px",
-                  borderBottom: index !== data.length - 1 ? "1px solid var(--border-color)" : "none"
+                  borderBottom: index !== tableData.length - 1 ? "1px solid var(--border-color)" : "none"
                 }}
               >
                 <div className="click" style={{
