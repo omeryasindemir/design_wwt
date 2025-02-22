@@ -6,10 +6,11 @@ const NewTender = ({setShowNewTender, fetchData}) => {
 
     const [tenderUrl, setTenderUrl] = useState("")
     const [maxBalance, setMaxBalance] = useState(0)
+    const [tenderName, setTenderName] = useState("")
 
     const handleNewTender = async () => {
         try {
-            const res = await userNewTender({url: tenderUrl, maxBid: maxBalance}, localStorage.getItem(lsToken))
+            const res = await userNewTender({url: tenderUrl, maxBid: maxBalance, name: tenderName}, localStorage.getItem(lsToken))
             console.log(res)
             setShowNewTender(false)
             fetchData()
@@ -43,6 +44,9 @@ const NewTender = ({setShowNewTender, fetchData}) => {
                     </div>
                     <div style={{ marginTop: "16px" }}>
                         <input onChange={(e) => setMaxBalance(e.target.value)} className='tInput' type="number" name="max_balance" id="max_balance" placeholder="Maksimum Bakiye" />
+                    </div>
+                    <div style={{ marginTop: "16px" }}>
+                        <input onChange={(e) => setTenderName(e.target.value)} className='tInput' type="text" name="tender_name" id="tender_name" placeholder="İhale Adı" />
                     </div>
                 </div>
                 <div style={{ padding: "16px" }}>
