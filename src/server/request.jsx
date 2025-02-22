@@ -1,5 +1,5 @@
 // requests.jsx
-const API_BASE_URL = "http://localhost:3001";
+const API_BASE_URL = "http://212.68.34.55/api";
 
 export const getRequest = async (endpoint) => {
     try {
