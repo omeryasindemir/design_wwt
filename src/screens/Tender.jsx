@@ -51,6 +51,11 @@ const Tender = ({isAdmin}) => {
       title: "Kazanıldı mı?",
       dataIndex: "isWon",
       key: "isWon",
+    },
+    {
+      title: "İhale Adı",
+      dataIndex: "tenderName",
+      key: "tenderName",
     }
   ];
 
@@ -190,7 +195,8 @@ const Tender = ({isAdmin}) => {
     isStopped: item.isStopped ? "Durduruldu" : "Devam Ediyor",
     maxBid: <MaxBidCell item={item} />,
     url: <a href={item.url} target="_blank" rel="noopener noreferrer" style={{color: 'blue', textDecoration: 'underline'}}>Görüntüle</a>,
-    isWon: item.isStopped ? <StatusDot won={item.lastBid === item.userOffer} /> : "-"
+    isWon: item.isStopped ? <StatusDot won={item.lastBid === item.userOffer} /> : "-",
+    tenderName: item.tenderName
   }));
 
   return (
