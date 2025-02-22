@@ -23,6 +23,11 @@ const Tender = ({isAdmin}) => {
 
   const columns = [
     {
+      title: "İhale Adı",
+      dataIndex: "tenderName",
+      key: "tenderName",
+    },
+    {
       title: "Son Teklif",
       dataIndex: "lastBid",
       key: "lastBid",
@@ -51,11 +56,6 @@ const Tender = ({isAdmin}) => {
       title: "Kazanıldı mı?",
       dataIndex: "isWon",
       key: "isWon",
-    },
-    {
-      title: "İhale Adı",
-      dataIndex: "tenderName",
-      key: "tenderName",
     }
   ];
 
@@ -196,7 +196,7 @@ const Tender = ({isAdmin}) => {
     maxBid: <MaxBidCell item={item} />,
     url: <a href={item.url} target="_blank" rel="noopener noreferrer" style={{color: 'blue', textDecoration: 'underline'}}>Görüntüle</a>,
     isWon: item.isStopped ? <StatusDot won={item.lastBid === item.userOffer} /> : "-",
-    tenderName: item.tenderName
+    tenderName: item.name
   }));
 
   return (
