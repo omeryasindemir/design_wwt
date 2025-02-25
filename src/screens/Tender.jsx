@@ -99,7 +99,7 @@ const Tender = ({isAdmin}) => {
   const handleSaveEdit = async (id) => {
     try {
       const numericValue = parseFloat(editValue); // Convert string to number
-      await auctionMaxBidEdit({ maxBid: numericValue }, localStorage.getItem(lsToken), id);
+      await auctionMaxBidEdit({ maxBid: numericValue, name: uData.find(item => item._id === id).name }, localStorage.getItem(lsToken), id);
       // Refresh the data
       const newData = await auctionTenderList(localStorage.getItem(lsToken));
       setuData(newData);
