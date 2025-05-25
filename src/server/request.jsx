@@ -1,5 +1,5 @@
 // requests.jsx
-const API_BASE_URL = "http://localhost:3001";
+const API_BASE_URL = "https://c7d6-109-228-210-121.ngrok-free.app";
 
 export const getRequest = async (endpoint) => {
     try {
@@ -45,6 +45,7 @@ export const authLogin = async (data) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                'ngrok-skip-browser-warning': 'true'
             },
             body: JSON.stringify(data),
             credentials: "include"
@@ -73,7 +74,8 @@ export const authMe = async (data) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "csrf-token": data
+                "csrf-token": data,
+                'ngrok-skip-browser-warning': 'true'
             },
             credentials: "include"
         });
@@ -100,7 +102,8 @@ export const adminCreateKey = async (data) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "csrf-token": data
+                "csrf-token": data,
+                'ngrok-skip-browser-warning': 'true'
             },
             credentials: "include"
         });
@@ -122,7 +125,8 @@ export const adminManageKey = async (data, token) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "csrf-token": token
+                "csrf-token": token,
+                'ngrok-skip-browser-warning': 'true'
             },
             body: JSON.stringify(data),
             credentials: "include"
@@ -145,7 +149,8 @@ export const adminActiveKeys = async (data) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "csrf-token": data
+                "csrf-token": data,
+                'ngrok-skip-browser-warning': 'true'
             },
             credentials: "include"
         });
@@ -171,7 +176,8 @@ export const userBindKey = async (data, token) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "csrf-token": token
+                "csrf-token": token,
+                'ngrok-skip-browser-warning': 'true'
             },
             body: JSON.stringify(data),
             credentials: "include"
@@ -193,7 +199,8 @@ export const userCredSave = async (data, token) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "csrf-token": token
+                "csrf-token": token,
+                'ngrok-skip-browser-warning': 'true'
             },
             body: JSON.stringify(data),
             credentials: "include"
@@ -216,7 +223,8 @@ export const userNewTender = async (data, token) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "csrf-token": token
+                "csrf-token": token,
+                'ngrok-skip-browser-warning': 'true'
             },
             body: JSON.stringify(data),
             credentials: "include"
@@ -240,7 +248,8 @@ export const auctionTenderList = async (data) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "csrf-token": data
+                "csrf-token": data,
+                'ngrok-skip-browser-warning': 'true'
             },
             credentials: "include"
         });
@@ -261,7 +270,8 @@ export const auctionMaxBidEdit = async (data, token, id) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "csrf-token": token
+                "csrf-token": token,
+                'ngrok-skip-browser-warning': 'true'
             },
             body: JSON.stringify(data),
             credentials: "include"
