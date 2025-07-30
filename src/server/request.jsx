@@ -1,5 +1,5 @@
 // requests.jsx
-const API_BASE_URL = "https://4a6a053ec8dc.ngrok-free.app";
+const API_BASE_URL = "https://05ea0e531f77.ngrok-free.appp";
 
 export const getRequest = async (endpoint) => {
     try {
